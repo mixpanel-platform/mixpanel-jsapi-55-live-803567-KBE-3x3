@@ -7,9 +7,27 @@
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
   <body class="mixpanel-platform-body">
-    <h1>Hello, World!</h1>
+
     <script>
-      // Run queries and display results here
+      var query = function main(){
+            return Events({
+              from_date: "2016-02-12",
+              to_date: "2016-02-15"
+            }).map(function (events){
+              var firstEventTime = new Date(events.time).toJSON().slice(0,10);
+              return{
+                  "country": events.properties.mp_country_code,
+                  "firstEvent": firstEventTime
+              }
+            }).groupBy([function (country){
+              var country = country.country
+              return country
+            }], mixpanel.reducer.count()
+            ).reduce(mixpanel.reducer.top(25))
+          };
+  
+  console.log(query);
+
     </script>
   </body>
 </html>
