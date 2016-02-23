@@ -22,7 +22,8 @@
       MP.api.custom_query("function main(){return Events({from_date: '2016-02-12', to_date: '2016-02-15'}).map(function (events){var firstEventTime = new Date(events.time).toJSON().slice(0,10); return{'country': events.properties.mp_country_code,'firstEvent': firstEventTime}}).groupBy([function (country){var country = country.country; return country;}], mixpanel.reducer.count()).reduce(mixpanel.reducer.top(25))};").done(function(results){
         console.log(results);
         var data = {}
-        console.log(results.length)
+        console.log(results[0])
+        
         //console.log(data)
         //eventGraph.MPChart('setData', data);
       });
