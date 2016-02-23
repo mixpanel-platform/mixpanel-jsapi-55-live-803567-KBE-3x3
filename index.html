@@ -9,7 +9,7 @@
   <body class="mixpanel-platform-body">
 
     <script>
-      var query = function main(){
+      function main(){
             return Events({
               from_date: "2016-02-12",
               to_date: "2016-02-15"
@@ -25,8 +25,10 @@
             }], mixpanel.reducer.count()
             ).reduce(mixpanel.reducer.top(25))
           };
-  
-  console.log(query);
+      query = main();
+      MP.api.custom_query(query).done(function(results){
+        console.log(results.values());
+      });
 
     </script>
   </body>
