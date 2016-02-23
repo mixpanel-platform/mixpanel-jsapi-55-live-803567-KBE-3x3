@@ -19,7 +19,7 @@
     <script>
       var eventGraph  = $('#graph').MPChart({chartType: 'bar'});
       
-      MP.api.custom_query("function main(){return Events({from_date: '2016-02-12', to_date: '2016-02-15'}).map(function (events){var firstEventTime = new Date(events.time).toJSON().slice(0,10); return{'country': events.properties.mp_country_code,'firstEvent': firstEventTime}}).groupBy([function (country){var country = country.country; return country;}], mixpanel.reducer.count()).reduce(mixpanel.reducer.top(25))};").done(function(results){
+      MP.api.custom_query("function main(){return Events({from_date: '2016-02-01', to_date: '2016-02-15'}).map(function (events){var firstEventTime = new Date(events.time).toJSON().slice(0,10); return{'country': events.properties.mp_country_code,'firstEvent': firstEventTime}}).groupBy([function (country){var country = country.country; return country;}], mixpanel.reducer.count()).reduce(mixpanel.reducer.top(25))};").done(function(results){
         console.log("top level array " + results[0])
         console.log(results[0][0].key);
         for (var x in results[0]){
