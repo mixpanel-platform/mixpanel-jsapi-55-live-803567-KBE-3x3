@@ -25,10 +25,12 @@
             }], mixpanel.reducer.count()
             ).reduce(mixpanel.reducer.top(25))
           };
-      query = main();
-      MP.api.custom_query(query).done(function(results){
-        console.log(results.values());
-      });
+      query = JSON.stringify(main());
+      console.log(query)
+      
+      // MP.api.custom_query(query).done(function(results){
+      //   console.log(results.values());
+      // });
 
     </script>
   </body>
