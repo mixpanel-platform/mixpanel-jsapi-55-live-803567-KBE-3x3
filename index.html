@@ -6,15 +6,29 @@
     <link rel="stylesheet" type="text/css" href="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.css">
     <script src="https://cdn.mxpnl.com/libs/mixpanel-platform/build/mixpanel-platform.v0.latest.min.js"></script>
   </head>
-  <body class="mixpanel-platform-body">
-
+    <body class="mixpanel-platform-body">
+    <div class="mixpanel-platform-section">
+      <div class="header container" style="width: 100%; height: 70px; vertical-align: middle;">
+        <div style="width: 48%; display:inline-block; vertical-align: middle; text-align: right; padding-right: 8px;"><img src="http://s3.amazonaws.com/placester-wordpress/blogs.dir/8525/files/2014/06/CompassLogo_Black-192622.png" alt="Compass Dashboard"></div>
+        <div style="width: 48%; display:inline-block; vertical-align: middle; font-size: 50px; text-align: left; padding-left: 8px;">Dashboard</div>
+        
+      </div>
+      <div id="eventSelect" style="float: left;"></div>
+      <div id="by" class="mixpanel-platform-label" style="margin-left: 10px; display: none;">by</div>
+      <div id="propSelect" style="float: left;"></div>
+      <div id="dateSelect" style="float: right;"></div>
+      <div style="clear: both;"></div>
+      <div style="padding-top: 20px;" id="graph"></div>
+    </div>
+    
     <script>
-      var query = "function main(){return Events({from_date: '2016-02-12', to_date: '2016-02-15'}).map(function (events){var firstEventTime = new Date(events.time).toJSON().slice(0,10); return{'country': events.properties.mp_country_code,'firstEvent': firstEventTime}}).groupBy([function (country){var country = country.country; return country;}], mixpanel.reducer.count()).reduce(mixpanel.reducer.top(25))};"
+      var eventGraph  = $('#graph').MPChart({chartType: 'bar'});
 
       console.log(query)
       
       MP.api.custom_query("function main(){return Events({from_date: '2016-02-12', to_date: '2016-02-15'}).map(function (events){var firstEventTime = new Date(events.time).toJSON().slice(0,10); return{'country': events.properties.mp_country_code,'firstEvent': firstEventTime}}).groupBy([function (country){var country = country.country; return country;}], mixpanel.reducer.count()).reduce(mixpanel.reducer.top(25))};").done(function(results){
         console.log(results);
+        eventGraph.MPChart('setData', results);
       });
 
     </script>
